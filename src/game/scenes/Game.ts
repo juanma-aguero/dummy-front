@@ -1,14 +1,14 @@
 import { EventBus } from "../EventBus";
-import { Scene } from "phaser";
+import { Scene, Cameras, GameObjects, Input } from "phaser";
 
 export class Game extends Scene {
-  camera: Phaser.Cameras.Scene2D.Camera;
-  background: Phaser.GameObjects.Image;
-  gameText: Phaser.GameObjects.Text;
+  camera: Cameras.Scene2D.Camera | undefined;
+  background: GameObjects.Image | undefined;
+  gameText: GameObjects.Text | undefined;
 
-  platforms;
-  player;
-  cursors;
+  platforms: Phaser.Types.Physics.Arcade.ArcadeColliderType | undefined;
+  player:any;
+  cursors:any;
 
   constructor() {
     super("Game");
@@ -30,7 +30,7 @@ export class Game extends Scene {
     this.player.setCollideWorldBounds(true);
     this.player.body.setGravityY(300);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = (this.input.keyboard as Input.Keyboard.KeyboardPlugin).createCursorKeys();
     this.anims.create({
       key: "left",
       frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 3 }),
